@@ -14,7 +14,7 @@ pipeline {
         stage ("Deploy to Staging") {
             steps {
                 echo "Развёртывание приложения в staging..."
-                sh ".deploy staging"
+                sh "./deploy staging"
             }
         }
         stage ("Deploy to Production") {
