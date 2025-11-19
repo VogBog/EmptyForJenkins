@@ -11,6 +11,11 @@ pipeline {
                 echo "Тестирование приложения..."
             }
         }
+        stage ("Prepare to Deploy") {
+            steps {
+                sh 'chmod u+x deploy smoke-tests || { echo «chmod failed»; exit 1; }'
+            }
+        }
         stage ("Deploy to Staging") {
             steps {
                 echo "Развёртывание приложения в staging..."
