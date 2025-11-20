@@ -65,7 +65,7 @@ jobs:
         fetch(\`\${process.env.BOOKSTACK_URL}/api/pages\`, { 
           method: 'POST', 
           headers: { 
-            'Authorization': \`Token\${process.env.BOOKSTACK_API_ID}:\${process.env.BOOKSTACK_API_SECRET}\`, 
+            'Authorization': \`Token \${process.env.BOOKSTACK_API_ID}:\${process.env.BOOKSTACK_API_SECRET}\`, 
                 'Content-Type': 'application/json' 
               }, 
             body: JSON.stringify(payload) 
