@@ -23,7 +23,7 @@ jobs:
         ISSUE_BODY: ${{ github.event.issue.body }} 
         ISSUE_URL: ${{ github.event.issue.html_url }} 
         ISSUE_STATE: ${{ github.event.issue.state }}
-        ISSUE_ACTION: ${{ github.event.action }
+        ISSUE_ACTION: ${{ github.event.action }}
       run: | 
         mkdir page-generator 
         cd page-generator 
