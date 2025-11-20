@@ -33,6 +33,8 @@ jobs:
         echo "const fetch = require('node-fetch'); 
         const marked = require('marked'); 
         const title = process.env.ISSUE_TITLE; 
+        const state = process.env.ISSUE_STATE;
+        const action = process.env.ISSUE_ACTION;
         const body = process.env.ISSUE_BODY || 'Нет описания'; 
         const url = process.env.ISSUE_URL; 
         
