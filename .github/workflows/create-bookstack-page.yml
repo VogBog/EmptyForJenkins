@@ -2,7 +2,7 @@ name: Create BookStack Page on New Issue
 
 on: 
   issues: 
-    types: [opened]
+    types: [opened, closed, reopened]
     
 jobs: 
   createPage: 
@@ -22,6 +22,8 @@ jobs:
         ISSUE_TITLE: ${{ github.event.issue.title }}
         ISSUE_BODY: ${{ github.event.issue.body }} 
         ISSUE_URL: ${{ github.event.issue.html_url }} 
+        ISSUE_STATE: ${{ github.event.issue.state }}
+        ISSUE_ACTION: ${{ github.event.action }
       run: | 
         mkdir page-generator 
         cd page-generator 
@@ -33,8 +35,25 @@ jobs:
         const title = process.env.ISSUE_TITLE; 
         const body = process.env.ISSUE_BODY || 'Нет описания'; 
         const url = process.env.ISSUE_URL; 
+        
+        let statusText, statusColor;
+        if (state === 'closed') {
+          statusText = 'ЗАКРЫТО';
+          statusColor = '#d73a49';
+        } else if (state === 'open' && action === 'reopened') {
+          statusText = 'ПЕРЕОТКРЫТО'; 
+          statusColor = '#0366d6';
+        } else {
+          statusText = 'ОТКРЫТО';
+          statusColor = '#28a745';
+        }
+        
         const htmlBody = marked.parse(body); 
-        const fullHtml = \`<p><strong>Связанная задача:</strong> <a href='\${url}'>\${url}</a></p>\n\${htmlBody}\`; 
+        const fullHtml = \`
+        <div style=\"background: \${statusColor}; color: white; padding: 10px; border-radius: 5px; margin-bottom: 15px;\">
+          <strong>Статус задачи:</strong> \${statusText}
+        </div>
+        <p><strong>Связанная задача:</strong> <a href='\${url}'>\${url}</a></p>\n\${htmlBody}\`; 
         const payload = { 
           name: title, 
           book_id: process.env.BOOKSTACK_BOOK_ID, 
